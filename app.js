@@ -42,6 +42,25 @@ class UI {
 
   }
 
+  static darkMode() {  
+    document.body.classList.add('dark');
+    document.querySelector('table').classList.add('dark');
+    let i = document.querySelector('i');
+    i.classList.add('fa-sun');
+    i.classList.add('dark');
+    localStorage.setItem('darkTheme', 'true');
+  }
+  
+  static lightMode() {  
+    document.body.classList.remove('dark');
+    document.querySelector('table').classList.remove('dark');
+    let i = document.querySelector('i');
+    i.classList.remove('fa-sun');
+    i.classList.add('fa-moon');
+    i.classList.remove('dark');
+    localStorage.setItem('darkTheme', 'false')
+  }
+ 
   static clearFields(){
     document.querySelector('#title').value = '';
     document.querySelector('#author').value = '';
@@ -58,7 +77,6 @@ class Store {
     } else {
       books = JSON.parse(localStorage.getItem('books'));
     }
-
     return books;
   }
 
@@ -123,4 +141,24 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
   
 });
 
-//        dealing with space
+//   Dark mode
+
+document.querySelector('.btn-dm').addEventListener('click', (e) => {
+  let theme = localStorage.getItem('darkTheme');
+  if(theme == 'true'){
+    UI.lightMode(); 
+  } else {
+    UI.darkMode();
+  }
+});
+
+window.onload = () => {
+  if (localStorage.getItem("darkTheme") == 'true') {
+      UI.darkMode();
+  } else {
+      UI.lightMode();
+  }
+}
+
+
+
